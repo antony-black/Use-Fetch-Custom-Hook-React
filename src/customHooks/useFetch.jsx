@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { FetchService } from "../services/fetch.service";
 
 export default function useFetch(url, options = {}) {
   const [data, setData] = useState(null);
@@ -10,10 +10,9 @@ export default function useFetch(url, options = {}) {
     const fetchData = async () => {
       setPending(true);
       try {
-        const response = await axios.get(url, { ...options });
-
+        const response = await FetchService.getData(url, options);
         setData(response.data);
-        setErrorMsg("");
+        setErrorMsg(null);
       } catch (error) {
         setErrorMsg(error.message || "An error occurred");
       } finally {
